@@ -30,19 +30,22 @@ Attendance Management System is a software developed for daily student attendanc
 
 # Screenshots #
 
-|<img src="Documentation/Screenshots/Screenshot_2019-04-11-14-52-02-558_com.developerdesk9.attendanceregister.png" width="267">|<img src="Documentation/Screenshots/Screenshot_2019-04-11-15-39-16-298_com.developerdesk9.attendanceregister.png" width="267">|<img src="Documentation/Screenshots/Screenshot_2019-04-11-15-03-53-934_com.developerdesk9.attendanceregister.png" width="267">|
+|<img src="Documentation/Screenshots/1SplashScreen.png" width="267">|<img src="Documentation/Screenshots/2InternetCheck.png" width="267">|<img src="Documentation/Screenshots/3LoginPanel.png" width="267">|
 |:--:|:--:|:--:|
 |**Splashscreen**|**Internet Check**|**Login**|
 
 
-|<img src="Documentation/Screenshots/Screenshot_2019-04-11-14-53-33-176_com.developerdesk9.attendanceregister.png" width="267">|<img src="Documentation/Screenshots/Screenshot_2019-04-11-14-53-38-375_com.developerdesk9.attendanceregister.png" width="267">|<img src="Documentation/Screenshots/Screenshot_2019-04-11-14-53-50-779_com.developerdesk9.attendanceregister.png" width="267">|
+|<img src="Documentation/Screenshots/4DashBoard.png" width="267">|<img src="Documentation/Screenshots/5NavigationBar.png" width="267">|<img src="Documentation/Screenshots/6AttendanceDetails.png" width="267">|
 |:--:|:--:|:--:|
-|**Navigation drawer**|**Profile Section**|**Change Password**|
+|**Dashboard**|**Navigation drawer**|**Attendance Detail**|
 
-|<img src="Documentation/Screenshots/Screenshot_2019-04-11-14-52-29-664_com.developerdesk9.attendanceregister.png" width="267">|<img src="Documentation/Screenshots/Screenshot_2019-04-11-15-17-58-748_com.developerdesk9.attendanceregister.png" width="267">|<img src="Documentation/Screenshots/Screenshot_2019-04-11-14-56-35-642_com.developerdesk9.attendanceregister.png" width="267">|
+|<img src="Documentation/Screenshots/7AttendanceRegister.png" width="267">|<img src="Documentation/Screenshots/8AttendaceSuccessfull.png" width="267">|<img src="Documentation/Screenshots/9ViewAttendance.png" width="267">|
 |:--:|:--:|:--:|
-|**Dashboard**|**Select Enrolled subjects**|**Attendace Record with all required details**|
+|**Attendance Register**|**Attendace Successfull**|**View Attendance**|
 
+|<img src="Documentation/Screenshots/10AttendaceRecord.png" width="267">|<img src="Documentation/Screenshots/11AttendanceRecordViaDate.png" width="267">|<img src="Documentation/Screenshots/12UpdateAttendance.png" width="267">|
+|:--:|:--:|:--:|
+|**Attendace Record**|**Attendance Via Date**|**Update Attendance**|
 
 ## Tools Used
 * [Android Studio](https://developer.android.com/studio) : Used as the Android developement environment.
