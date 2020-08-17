@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.developerdesk9.attendanceregister">
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".fac_viewattendance_bydate"></activity>
+        <activity android:name=".fac_attenview_mid2" />
+        <activity android:name=".facview_atten_mid1" />
+        <activity android:name=".backlogstdregisteration_tosubject" />
+        <activity android:name=".takeattendancefinalbyfaculty" />
+        <activity android:name=".factakeatn_midpage" />
+        <activity android:name=".fac_create_new_attendenceshet" />
+        <activity android:name=".addsubjectbyadmin" />
+        <activity
+            android:name=".facultydashboard"
+            android:label="Faculty Dashboard"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".removestudent" />
+        <activity android:name=".addstudent" />
+        <activity android:name=".removefaculty" />
+        <activity android:name=".addfaculty" />
+        <activity
+            android:name=".admin_mainpage"
+            android:label="Admin"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

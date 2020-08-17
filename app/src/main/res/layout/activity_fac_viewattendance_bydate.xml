@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/bgcolor"
+    tools:context=".fac_viewattendance_bydate">
+
+
+    <TextView
+        android:id="@+id/subject"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/loginapagespinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Subject"
+        android:gravity="center"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+
+        />
+
+
+    <TextView
+        android:id="@+id/date_tv"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/loginapagespinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Date/Time:"
+        android:gravity="center"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+
+        />
+
+    <ListView
+        android:id="@+id/listviewbydate"
+        android:background="@drawable/loginapagespinner"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.891"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="69dp" />
+
+
+
+</LinearLayout>

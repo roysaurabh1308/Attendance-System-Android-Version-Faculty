@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/bgcolor"
+    tools:context=".fac_attenview_mid2">
+
+    <include android:id="@+id/view_attencollec_toolbar"
+        layout="@layout/toolbar"></include>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_collective_attendance_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </android.support.v7.widget.RecyclerView>
+
+
+
+</LinearLayout>

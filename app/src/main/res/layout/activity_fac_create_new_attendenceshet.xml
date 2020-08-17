@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bgcolor"
+    tools:context=".fac_create_new_attendenceshet">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Create Your Attendance Sheet"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"/>
+        <Spinner
+            android:id="@+id/spinnerfac_cshhet"
+            android:spinnerMode="dialog"
+            android:background="@drawable/loginapagespinner"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_margin="10dp"
+            />
+        <Button
+            android:id="@+id/fac_csheetbtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Create Sheet"
+            android:background="@drawable/loginapagespinner"
+            android:textColor="#070707"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>

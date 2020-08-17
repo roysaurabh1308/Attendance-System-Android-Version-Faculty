@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bgcolor"
+    tools:context=".addsubjectbyadmin">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Subject Registration For Faculty"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"/>
+
+        <EditText
+            android:id="@+id/subcode_et"
+            android:textColor="#050505"
+            android:background="@drawable/inputs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:hint="Enter Subject Code"
+            android:inputType="textPersonName"
+            android:layout_margin="10dp" />
+
+        <Spinner
+            android:id="@+id/choosefacspinner"
+            android:spinnerMode="dialog"
+            android:background="@drawable/loginapagespinner"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_margin="10dp"
+            />
+        <Spinner
+            android:spinnerMode="dialog"
+            android:id="@+id/choosebatchspinner"
+            android:background="@drawable/loginapagespinner"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_margin="10dp"
+            />
+
+        <Button
+            android:id="@+id/adsubm_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add Subject"
+            android:background="@drawable/loginapagespinner"
+            android:textColor="#070707"
+            />
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

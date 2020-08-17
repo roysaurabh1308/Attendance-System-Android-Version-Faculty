@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".facultydashboard"
+    tools:showIn="@layout/app_bar_facultydashboard">
+
+    <TextView
+        android:id="@+id/date_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#fff"
+        android:background="#212121"
+        android:textAlignment="center"
+        android:padding="5dp"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+        />
+    <TextView
+        android:id="@+id/notify"
+        android:layout_below="@+id/date_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textColor="#fff"
+        android:background="#212121"
+        android:padding="5dp"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+        android:singleLine="true"
+        android:scrollHorizontally="true"
+        android:ellipsize="marquee"
+        android:marqueeRepeatLimit ="marquee_forever"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:text="Hi! Welcome to Attendance Register." />
+
+
+    <LinearLayout
+        android:id="@+id/buttons"
+        android:layout_below="@+id/notify"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/fac_take_atten_to_page_btn"
+                android:src="@mipmap/takeattendance"
+                android:layout_width="match_parent"
+                android:scaleType="fitXY"
+                android:padding="40dp"
+                android:layout_height="150dp"
+                android:layout_weight="1"
+                android:background="#9c27b0"
+                android:layout_margin="5dp"
+                />
+            <ImageButton
+                android:id="@+id/fac_view_atten_dashboardpage_btn"
+                android:layout_width="match_parent"
+                android:scaleType="fitXY"
+                android:padding="40dp"
+                android:src="@mipmap/predictor"
+                android:layout_height="150dp"
+                android:layout_weight="1"
+                android:background="#ff6d00"
+                android:layout_margin="5dp"
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>
