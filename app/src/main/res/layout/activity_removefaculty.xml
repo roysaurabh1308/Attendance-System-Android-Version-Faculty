@@ -8,6 +8,7 @@
     tools:context=".removefaculty">
 
     <LinearLayout
+        android:background="@drawable/backgroundcorners"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -17,8 +18,13 @@
         android:layout_marginLeft="10dp"
         >
         <TextView
-            android:layout_width="match_parent"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
             android:gravity="center"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
             android:text="Delete Faculty Account"/>
@@ -30,27 +36,22 @@
             android:background="@drawable/inputs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp"
-            android:ems="10"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
             android:hint="Username"
             android:inputType="textPersonName"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.221"
-            tools:layout_editor_absoluteX="8dp" />
+             />
 
         <Button
             android:id="@+id/fac_delete_btn"
             android:textColor="#0F0F0F"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
             android:text="Delete"
             android:background="@drawable/loginapagespinner"
             />

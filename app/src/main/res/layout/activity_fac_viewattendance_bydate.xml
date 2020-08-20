@@ -14,10 +14,11 @@
         android:layout_marginTop="20dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:background="@drawable/loginapagespinner"
+        android:background="@drawable/dateboundry"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Subject"
+        android:textColor="#050505"
         android:gravity="center"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
 
@@ -30,10 +31,11 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="20dp"
-        android:background="@drawable/loginapagespinner"
+        android:background="@drawable/dateboundry"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Date/Time:"
+        android:textColor="#050505"
         android:gravity="center"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
 
@@ -41,7 +43,7 @@
 
     <ListView
         android:id="@+id/listviewbydate"
-        android:background="@drawable/loginapagespinner"
+        android:background="@drawable/dateboundry"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"

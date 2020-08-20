@@ -41,6 +41,8 @@ public class fac_viewattendance_bydate extends AppCompatActivity {
 
     String mrollno;
 
+    int count=0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,9 +81,13 @@ public class fac_viewattendance_bydate extends AppCompatActivity {
                     avalue=dspp.child("atvalue").getValue().toString();
 
                     attendance.add(rollnumber+"                             "+avalue);
+
+                    count=count+1;
                 }
+                attendance.add("Total Submission=  "+count);
                 listshow(attendance);//this is a function created by me
                 mDialog.dismiss();
+                count=0;
             }
 
             @Override
@@ -101,7 +107,6 @@ public class fac_viewattendance_bydate extends AppCompatActivity {
         listViewbydate.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-
                 String dataupatevar=parent.getItemAtPosition(position).toString();
                 updateattendence(dataupatevar);
                 return false;
@@ -116,11 +121,7 @@ public class fac_viewattendance_bydate extends AppCompatActivity {
         String atvalue=dataupdate.substring(14);
         atvalue=atvalue.trim();
         String atvaltrim=atvalue.substring(0,1);
-
         final String atvaluemax=atvalue.substring(2,3);
-
-        //Toast.makeText(getApplicationContext(),atvaluemax,Toast.LENGTH_SHORT).show();
-
 
 
         final AlertDialog.Builder myDialog=new AlertDialog.Builder(fac_viewattendance_bydate.this);

@@ -2,10 +2,12 @@ package com.developerdesk9.attendanceregister;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -60,6 +62,7 @@ public class fac_attenview_mid2 extends AppCompatActivity {
         RecyclerView.LayoutManager layoutManager= new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         adapter = new RAdapter(data, getApplicationContext());
+
         stuensbdetails = FirebaseDatabase.getInstance().getReference("StuEnSubDetails").child(subid);
         attenrecord = FirebaseDatabase.getInstance().getReference("AttendanceRecord").child(subid);
         stuensbdetails.keepSynced(true);
@@ -118,13 +121,35 @@ public class fac_attenview_mid2 extends AppCompatActivity {
                     String aval;
                     aval = dsp.child(id).child("atvalue").getValue(String.class);
                     //Toast.makeText(getApplicationContext(),name+"--"+aval,Toast.LENGTH_SHORT).show();
-                    tpresent += Integer.valueOf(aval.substring(0, 1));
-                    tattencount += Integer.valueOf(aval.substring(2, 3));
+                    try {
+                        tpresent += Integer.valueOf(aval.substring(0, 1));
+                        tattencount += Integer.valueOf(aval.substring(2, 3));
+                    }
+                    catch (Exception e){
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(fac_attenview_mid2.this);
+                        builder.setTitle("Alert !");
+                        builder.setMessage("Something went wrong please contact Admin");
+                        builder.setCancelable(false);
+                        builder.setNegativeButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which)
+                            {
+
+                                dialog.cancel();
+                            }
+                        });
+                        AlertDialog alertDialog = builder.create();
+                        alertDialog.show();
+
+                    }
+
 
                 }
                 int abs = tattencount - tpresent;
                 float percent;
                 percent = (((float) tpresent) / ((float) tattencount)) * 100;
+                percent=Math.round(percent*1000)/1000;
 
                 String attendence=(String.valueOf(tpresent)+"/"+String.valueOf(tattencount)) ;
                 String absent=String.valueOf(abs);
@@ -160,11 +185,14 @@ public class fac_attenview_mid2 extends AppCompatActivity {
         public void onBindViewHolder(@NonNull RViewHolder v, int i) {
             View view = v.itemView;
             String percent = details.get(i).percent;
-            if(Float.valueOf(percent)<75){
+            if(Float.valueOf(percent)<=75){
                 v.percenttv.setTextColor(Color.RED);
             }
-            else if(Float.valueOf(percent)>=90){
-                v.percenttv.setTextColor(Color.GREEN);
+            else if(Float.valueOf(percent)>75 && Float.valueOf(percent)<85 ){
+                v.percenttv.setTextColor(Color.BLUE);
+            }
+            else if(Float.valueOf(percent)>=85){
+                v.percenttv.setTextColor(Color.MAGENTA);
             }
             v.enrollmenttv.setText(details.get(i).getEnrollment());
             v.nametv.setText(details.get(i).getName());

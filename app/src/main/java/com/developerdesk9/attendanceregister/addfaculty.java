@@ -25,8 +25,7 @@ public class addfaculty extends AppCompatActivity {
     EditText Tname;
     EditText Tid;
     EditText tpassword;
-
-    String tname,tid,tpass;
+    String tname,tid,tpass,type;
     String mEmail,mPassword;
     Button addBtn;
     DatabaseReference databaseFaculty;
@@ -86,24 +85,23 @@ public class addfaculty extends AppCompatActivity {
         mProgress.setCanceledOnTouchOutside(false);
         mProgress.show();
 
-        mEmail=tid+"@iiitnr.edu.in";
+        mEmail=tid+"gmail.com";
         mPassword=tpass;
 
-
-
+        type="faculty";
         mAuth.createUserWithEmailAndPassword(mEmail,mPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful())
                 {
-                    Faculty faculty =new Faculty(tname,tid);
+                    Faculty faculty=new Faculty(tname,tid,type);
                     databaseFaculty.child(tid).setValue(faculty).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
 
                             if (task.isSuccessful()){
                                 mProgress.dismiss();
-                                finish();
+                                startActivity(getIntent());
                                 Toast.makeText(getApplicationContext(),"Faculty Added Successfully", Toast.LENGTH_LONG).show();
 
                             }
@@ -116,7 +114,6 @@ public class addfaculty extends AppCompatActivity {
                         }
                     });
                     //sendEmailVerificaionLink();
-                    mAuth.signOut();
                     finish();
                 }
                 else

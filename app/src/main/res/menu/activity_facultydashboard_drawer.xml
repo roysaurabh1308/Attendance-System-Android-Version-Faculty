@@ -3,20 +3,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <item android:title="Attendance Section">
+
+    <item android:title="User Section">
         <menu>
             <item
-                android:id="@+id/nav_fac_create_new_att_sheet"
-                android:icon="@drawable/ic_menu_gallery"
-                android:title="Create New Attendance Sheet" />
+                android:id="@+id/nav_admin_profile"
+                android:icon="@drawable/profiile_icon"
+                android:title="Profile" />
+
             <item
                 android:id="@+id/nav_fac_del_attendence_sheet"
-                android:icon="@drawable/ic_menu_manage"
+                android:icon="@drawable/delete_icon"
                 android:title="Delete Attendance Sheet" />
             <item
                 android:id="@+id/nav_fac_backstdreg_btn"
-                android:icon="@drawable/ic_menu_manage"
+                android:icon="@drawable/add_person_icon"
                 android:title="Register Backlog Student" />
+
+            <!--
+            <item
+                android:id="@+id/nav_fac_atten_sheet_creation_btn"
+                android:icon="@drawable/accout_crestion_logo"
+                android:title="Attendance Sheet Creation" />
+
+            -->
         </menu>
 
     </item>
@@ -25,11 +35,11 @@
         <menu>
             <item
                 android:id="@+id/nav_fac_chnagepass"
-                android:icon="@drawable/ic_menu_share"
+                android:icon="@drawable/reset_password_icon"
                 android:title="Reset Password" />
             <item
                 android:id="@+id/nav_faclogout"
-                android:icon="@drawable/ic_menu_send"
+                android:icon="@drawable/logout_icon"
                 android:title="Logout" />
         </menu>
     </item>

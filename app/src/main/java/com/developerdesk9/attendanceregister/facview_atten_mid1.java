@@ -112,27 +112,6 @@ public class facview_atten_mid1 extends AppCompatActivity {
         //spinner date
 
 
-
-
-        /*
-        ArrayAdapter<String> facultydaterrayadapter=new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,lstfacdate);
-        facultysubarrayadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerdate.setAdapter(facultydaterrayadapter);
-
-        spinnerdate.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                itemdate=parent.getItemAtPosition(position).toString();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-        */
-
         viewdateproceedbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

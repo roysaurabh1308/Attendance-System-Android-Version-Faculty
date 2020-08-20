@@ -1,6 +1,7 @@
 package com.developerdesk9.attendanceregister;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,21 +15,25 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class addstudent extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class addstudent extends AppCompatActivity {
 
-    String item;
+    String item_batchname;
     EditText Sname;
     EditText Sid,spassword;
     String sname,sid,spass;
     Button addstdbtn;
     DatabaseReference databaseStudent;
     DatabaseReference batchdetails;
+    DatabaseReference dbbatchname;
     ProgressDialog mDialog;
 
     @Override
@@ -45,20 +50,50 @@ public class addstudent extends AppCompatActivity implements AdapterView.OnItemS
 
         databaseStudent = FirebaseDatabase.getInstance().getReference("Student");
         batchdetails=FirebaseDatabase.getInstance().getReference("Batchdetails");
+        dbbatchname=FirebaseDatabase.getInstance().getReference("BatchName");
 
         Spinner spinner = (Spinner) findViewById(R.id.spinner1);
-        spinner.setOnItemSelectedListener((AdapterView.OnItemSelectedListener) this);
-        List<String> categories = new ArrayList<String>();
-        categories.add("Select Batch");
-        for(int i=2016;i<=2030;i++)
-        {
-            String a=String.valueOf(i);
-            categories.add("CSE"+a);
-            categories.add("ECE"+a);
-        }
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(dataAdapter);
+
+
+        //Spinner for batchname
+        final List<String> lstbacthn=new ArrayList<String>();
+        lstbacthn.add("Select Batch");
+
+        ArrayAdapter<String> facultyarrayadapter=new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,lstbacthn);
+        facultyarrayadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(facultyarrayadapter);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                item_batchname=parent.getItemAtPosition(position).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        dbbatchname.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot dsp :dataSnapshot.getChildren()){
+                    String name;
+                    name=dsp.getKey();
+                    lstbacthn.add(name);
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+
 
         addstdbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,22 +104,13 @@ public class addstudent extends AppCompatActivity implements AdapterView.OnItemS
     }
 
 
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        item =parent.getItemAtPosition(position).toString().trim();
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
-    }
 
     public void stdstartadd(){
 
         sname = Sname.getText().toString().trim();
         sid = Sid.getText().toString().trim();
         spass = spassword.getText().toString().trim();
-        String batch=item.toUpperCase().trim();
+        String batch=item_batchname.toUpperCase().trim();
 
         if(sname.isEmpty()){
             Sname.setError("Enter Name");
@@ -99,7 +125,7 @@ public class addstudent extends AppCompatActivity implements AdapterView.OnItemS
             spassword.setError("Enter Password");
             return;
         }
-        else if(item=="Select Batch")
+        else if(item_batchname=="Select Batch")
         {
             Toast.makeText(getApplicationContext(),"Please Select Batch",Toast.LENGTH_SHORT).show();
             return;
@@ -112,14 +138,15 @@ public class addstudent extends AppCompatActivity implements AdapterView.OnItemS
 
         Student student=new Student(sname,sid,spass,batch);
         batchdetails batchs=new batchdetails(sid,sname);
-        batchdetails.child(item).child(sid).setValue(batchs);
+        batchdetails.child(item_batchname).child(sid).setValue(batchs);
         databaseStudent.child(sid).setValue(student).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()){
                     mDialog.dismiss();
-                    finish();
+                    startActivity(getIntent());
                     Toast.makeText(getApplicationContext(),"Student Added Successfully", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),"Add another Student", Toast.LENGTH_LONG).show();
 
                 }
                 else {

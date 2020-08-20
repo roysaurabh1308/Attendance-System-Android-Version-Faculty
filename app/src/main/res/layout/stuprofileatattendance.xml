@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Student Profile"
+                android:gravity="center"
+                android:layout_margin="10dp"
+                android:background="@drawable/bgcolor"
+                android:padding="10dp"
+                android:textColor="@android:color/white"
+                android:textAppearance="?android:textAppearanceMedium"/>
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/student_image_attenn"
+                android:layout_gravity="center"
+                android:src="@drawable/profile_nav_logo"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="0dp"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                app:civ_border_width="3dp"
+                app:civ_border_color="#FCFCFC"/>
+
+            <LinearLayout
+                android:background="@drawable/backgroundcorners"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_gravity="center"
+                android:orientation="vertical"
+                android:layout_marginBottom="10dp">
+
+                <TextView
+                    android:id="@+id/student_name_atten_et"
+                    android:background="@drawable/inputs"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:hint="Name"
+                    android:textColor="#2B2727"
+                    android:textColorHint="#3D3939"
+                    />
+                <TextView
+                    android:id="@+id/student_enroll_atten_et"
+                    android:background="@drawable/inputs"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:hint="Designation:"
+                    android:textColor="#2B2727"
+                    android:textColorHint="#3D3939"
+                    />
+
+
+            </LinearLayout>
+            <Button
+                android:id="@+id/atten_stu_ok_bt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="OK"
+                android:textColor="@android:color/white"
+                android:layout_margin="10dp"
+                android:padding="4dp"
+                android:background="@drawable/bgcolor"
+
+                />
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

@@ -4,15 +4,17 @@ public class Faculty {
 
     String tname;
     String tid;
+    String type;
 
 
     public Faculty(){
 
     }
 
-    public Faculty(String tname, String tid) {
+    public Faculty(String tname, String tid, String type) {
         this.tname = tname;
         this.tid = tid;
+        this.type = type;
     }
 
     public String getTname() {
@@ -29,5 +31,13 @@ public class Faculty {
 
     public void setTid(String tid) {
         this.tid = tid;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

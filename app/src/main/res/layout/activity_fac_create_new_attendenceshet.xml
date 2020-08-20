@@ -8,9 +8,10 @@
     tools:context=".fac_create_new_attendenceshet">
 
     <LinearLayout
+        android:background="@drawable/backgroundcorners"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="140dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:orientation="vertical">
@@ -20,23 +21,30 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Create Your Attendance Sheet"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"/>
         <Spinner
             android:id="@+id/spinnerfac_cshhet"
             android:spinnerMode="dialog"
             android:background="@drawable/loginapagespinner"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_margin="10dp"
+            android:layout_height="50dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="3dp"
             />
         <Button
             android:id="@+id/fac_csheetbtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Create Sheet"
+            android:layout_marginBottom="20dp"
             android:background="@drawable/loginapagespinner"
-            android:textColor="#070707"
-            />
+            android:text="Create Sheet"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:textColor="#090606"/>
 
     </LinearLayout>
 

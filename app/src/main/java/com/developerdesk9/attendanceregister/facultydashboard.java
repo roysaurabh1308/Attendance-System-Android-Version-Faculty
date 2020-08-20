@@ -1,7 +1,9 @@
 package com.developerdesk9.attendanceregister;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -20,10 +22,12 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -31,9 +35,18 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.StorageTask;
+import com.squareup.picasso.Picasso;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class facultydashboard extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -43,21 +56,29 @@ public class facultydashboard extends AppCompatActivity
     ImageButton facviewattenbtn;
     private TextView nav_name;
     private TextView nav_username;
-
     DatabaseReference facultyrec;
-    FirebaseAuth mAuth;
+    private FirebaseAuth defaultAuth;
     View headerViw;
-    private static long back_pressed;
     ProgressDialog mDialog;
-
     public TextView date_time,notify;
+    private static final String FILE_NAME = "state.txt";
+
+    CircleImageView fac_nav_image;
+    FirebaseStorage firebaseStorage;
+    private static int PICK_IMAGE=123;
+    Uri imagepath;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_facultydashboard);
 
+        Intent intent=getIntent();
+        tid=intent.getStringExtra("tid");
         mDialog=new ProgressDialog(this);
+
+        firebaseStorage=FirebaseStorage.getInstance();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -75,9 +96,8 @@ public class facultydashboard extends AppCompatActivity
         notify=findViewById(R.id.notify);
         date_time.setText(formattedDate);
 
-        Intent intent=getIntent();
-        tid=intent.getStringExtra("tid");
-        String notif="Hello,"+" "+(tid.toUpperCase())+" welcome to Attendance Register.I hope I'm doing my job well for you";
+
+        String notif="Hello, Dr. "+(tid.toUpperCase())+" welcome to Attendance Register.";
         notify.setText(notif);
 
 
@@ -96,6 +116,7 @@ public class facultydashboard extends AppCompatActivity
        */
 
         facultyrec= FirebaseDatabase.getInstance().getReference("Faculty");
+        facultyrec.keepSynced(true);
 
 
 
@@ -109,6 +130,7 @@ public class facultydashboard extends AppCompatActivity
         headerViw=navigationView.getHeaderView(0);
         nav_name=(TextView)headerViw.findViewById(R.id.nav_name_fac);
         nav_username=(TextView)headerViw.findViewById(R.id.nav_username_fac);
+        fac_nav_image=(CircleImageView)headerViw.findViewById(R.id.nav_fac_imageView);
         navigationView.setNavigationItemSelectedListener(this);
 
         facultyrec.addValueEventListener(new ValueEventListener() {
@@ -119,9 +141,7 @@ public class facultydashboard extends AppCompatActivity
                 nav_name.setText(mname);
 
                 musernam=dataSnapshot.child(tid).child("tid").getValue(String.class);
-
-                //Toast.makeText(getApplicationContext(),musernam+","+mname,Toast.LENGTH_SHORT).show();
-                musernam=musernam+"@iiitnr.edu.in";
+                musernam=musernam+"@gmail.com";
                 nav_username.setText(musernam);
             }
 
@@ -148,7 +168,31 @@ public class facultydashboard extends AppCompatActivity
                 startActivity(intent2);
             }
         });
+
+        fac_nav_image.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Intent intent=new Intent(getApplicationContext(),facultyprofile.class);
+                intent.putExtra("tid",tid);
+                startActivity(intent);
+                return false;
+            }
+        });
+
+        //naviagtion bar image
+
+        StorageReference storageReference1=firebaseStorage.getReference("Faculty");
+        storageReference1.child(tid).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                try {
+                    Picasso.get().load(uri).fit().centerCrop().into(fac_nav_image);
+                }catch (Exception e){}
+
+            }
+        });
     }
+
 
     @Override
     public void onBackPressed() {
@@ -156,15 +200,33 @@ public class facultydashboard extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         }
-        else if (back_pressed+2000 >System.currentTimeMillis()){
-            super.onBackPressed();
-            finish();
-            ActivityCompat.finishAffinity(this);
-            System.exit(0);
-        }
         else {
-            Toast.makeText(getBaseContext(), "Press once again to exit", Toast.LENGTH_SHORT).show();
-            back_pressed = System.currentTimeMillis();
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Alert!");
+            builder.setMessage("Do you want to Exit?");
+            builder.setCancelable(false);
+            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which)
+                {
+
+                    finish();
+                    ActivityCompat.finishAffinity(facultydashboard.this);
+                    System.exit(0);
+                }
+            });
+
+            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which)
+                {
+
+                    dialog.cancel();
+                }
+            });
+
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();  // Show the Alert Dialog box
         }
     }
 
@@ -184,6 +246,14 @@ public class facultydashboard extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            startActivity(new Intent(getApplicationContext(),about_app.class));
+            return true;
+        }
+        else if(id == R.id.logout_title_facdash_btn) {
+            signout("3999");
+            Intent logout=new Intent(getApplicationContext(),MainActivity.class);
+            logout.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(logout);
             return true;
         }
 
@@ -199,14 +269,15 @@ public class facultydashboard extends AppCompatActivity
         //if (id == R.id.nav_facprofile) {
             // Handle the camera action
         //}
-        if (id == R.id.nav_fac_create_new_att_sheet) {
-            Intent intent=new Intent(this,fac_create_new_attendenceshet.class);
-            intent.putExtra("ttid",tid);
+        if (id == R.id.nav_fac_del_attendence_sheet) {
+
+        }
+        else if (id == R.id.nav_admin_profile) {
+            Intent intent=new Intent(this,facultyprofile.class);
+            intent.putExtra("tid",tid);
             startActivity(intent);
-
-        } else if (id == R.id.nav_fac_del_attendence_sheet) {
-
-        } else if (id == R.id.nav_fac_backstdreg_btn) {
+        }
+        else if (id == R.id.nav_fac_backstdreg_btn) {
             Intent intent=new Intent(this,backlogstdregisteration_tosubject.class);
             intent.putExtra("ttid",tid);
             startActivity(intent);
@@ -216,10 +287,10 @@ public class facultydashboard extends AppCompatActivity
             forPassCustomDialog();
 
         } else if (id == R.id.nav_faclogout) {
-            Intent logout=new Intent(getApplicationContext(),MainActivity.class);
-            logout.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(logout);
-            mAuth.signOut();
+            signout("3999");
+           Intent logout=new Intent(getApplicationContext(),MainActivity.class);
+           logout.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+           startActivity(logout);
 
         }
 
@@ -254,7 +325,7 @@ public class facultydashboard extends AppCompatActivity
 
                 mDialog.setMessage("Sending Reset Link...");
                 mDialog.show();
-                mAuth.sendPasswordResetEmail(mEmail).addOnCompleteListener(new OnCompleteListener<Void>() {
+                defaultAuth.sendPasswordResetEmail(mEmail).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful())
@@ -275,6 +346,29 @@ public class facultydashboard extends AppCompatActivity
         });
 
         dialog.show();
+    }
+
+    public void signout(String statevar){
+
+        FileOutputStream fos = null;
+
+        try {
+            fos = openFileOutput(FILE_NAME, MODE_PRIVATE);
+            fos.write(statevar.getBytes());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (fos != null) {
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
     }
 
 

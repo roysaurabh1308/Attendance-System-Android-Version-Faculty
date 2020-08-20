@@ -4,13 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/okk"
     android:background="@drawable/bgcolor"
     tools:context=".factakeatn_midpage">
 
+
     <LinearLayout
+        android:background="@drawable/backgroundcorners"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="130dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:orientation="vertical">
@@ -21,24 +24,31 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Select Date and Class"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"/>
 
         <Spinner
             android:id="@+id/spinnerselsub"
             android:background="@drawable/loginapagespinner"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_margin="10dp"
+            android:layout_height="50dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="3dp"
             />
 
         <TextView
+            android:drawableLeft="@drawable/calender_black_icon"
+            android:drawablePadding="6dp"
             android:id="@+id/date_et"
             android:textColor="#2B2727"
             android:background="@drawable/inputs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:ems="10"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
             android:hint="Select Date"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
             android:layout_marginStart="8dp"
@@ -48,8 +58,10 @@
             android:id="@+id/spinnerattenvalue"
             android:background="@drawable/loginapagespinner"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_margin="10dp"
+            android:layout_height="50dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
             />
 
         <Button
@@ -57,6 +69,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Click to Proceed"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
             android:background="@drawable/loginapagespinner"
             android:textColor="#070707"
             />

@@ -5,14 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".admin_mainpage"
+    android:gravity="center"
+    android:background="@drawable/bgcolor"
     tools:showIn="@layout/app_bar_admin_mainpage">
 
     <LinearLayout
+        android:background="@drawable/backgroundcorners"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="0dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:orientation="vertical">
@@ -22,8 +25,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:textColor="#fff"
-            android:background="@drawable/bgcolor"
+            android:textColor="@color/saurabh"
+            android:background="@drawable/loginapagespinner"
             android:text="Add Faculty"
             />
 
@@ -32,8 +35,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:textColor="#fff"
-            android:background="@drawable/bgcolor"
+            android:textColor="@color/saurabh"
+            android:background="@drawable/loginapagespinner"
             android:text="Remove Faculty"
             />
 
@@ -42,8 +45,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:textColor="#fff"
-            android:background="@drawable/bgcolor"
+            android:textColor="@color/saurabh"
+            android:background="@drawable/loginapagespinner"
             android:text="Add Student"
             />
 
@@ -52,8 +55,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:textColor="#fff"
-            android:background="@drawable/bgcolor"
+            android:textColor="@color/saurabh"
+            android:background="@drawable/loginapagespinner"
             android:text="Remove Student"
             />
         <Button
@@ -61,9 +64,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:textColor="#fff"
-            android:background="@drawable/bgcolor"
+            android:textColor="@color/saurabh"
+            android:background="@drawable/loginapagespinner"
             android:text="Add Subject"
+            />
+        <Button
+            android:id="@+id/baclog_regby_admin_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textColor="@color/saurabh"
+            android:background="@drawable/loginapagespinner"
+            android:text="Backlog Registration"
             />
 
     </LinearLayout>

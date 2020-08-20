@@ -3,16 +3,20 @@
 <CheckedTextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/checkboxt"
     android:layout_width="fill_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/inputs"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dateboundry"
     android:checkMark="?android:attr/listChoiceIndicatorMultiple"
     android:gravity="center_vertical"
     android:hint="Enrollment Number"
-    android:padding="5sp"
-    android:paddingTop="10sp"
-    android:paddingBottom="10sp"
-    android:textColor="#000"
-    android:textSize="20dp">
+    android:layout_marginTop="20dp"
+    android:layout_marginBottom="20dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="10dp"
+    android:padding="20sp"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:textColor="#0C0C0C"
+    android:textSize="30dp">
 
 
 

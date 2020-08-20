@@ -58,6 +58,7 @@ public class factakeatn_midpage extends AppCompatActivity {
         spinnerattvalue=findViewById(R.id.spinnerattenvalue);
 
         dateet=findViewById(R.id.date_et);
+
         dateet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -152,7 +153,10 @@ public class factakeatn_midpage extends AppCompatActivity {
         attenmid.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finaldatetime=(datetimestamp+" ("+time+")");
+                String timestamppre;
+
+                timestamppre=(datetimestamp+" ("+time+")");
+                finaldatetime=timestamppre.toUpperCase();
                 calltonextpage();
 
             }
@@ -178,6 +182,7 @@ public class factakeatn_midpage extends AppCompatActivity {
             intent.putExtra("timestamp",finaldatetime);
             intent.putExtra("attenvalue",itemattenvalue);
             startActivity(intent);
+            finish();
         }
     }
 }

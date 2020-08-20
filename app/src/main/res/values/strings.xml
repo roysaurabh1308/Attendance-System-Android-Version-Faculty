@@ -9,4 +9,21 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_addfaculty">addfaculty</string>
     <string name="title_activity_facultydashboard">facultydashboard</string>
+
+    <string name="okk">
+        This application is developed by Team @developerdesk9.Inc
+        App by Saurabh Pandey and Web by Saurabh Roy.
+        \n\n
+
+        Copying any part of this application is strictly prohibited without the permission of company and developer.
+
+        \n\n
+
+        For any query and assistant feel free to contact.
+        \n\n
+        Email: developerdesk9@gmail.com
+        \n\n
+           Copyright&#169;2020
+
+    </string>
 </resources>

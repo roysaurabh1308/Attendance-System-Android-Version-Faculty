@@ -14,6 +14,7 @@
 
 
         <LinearLayout
+            android:background="@drawable/backgroundcorners"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -29,36 +30,40 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="View Previous Attendance"
+                android:textStyle="bold"
+                android:layout_marginBottom="10dp"
                 android:textColor="@android:color/white"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"/>
 
             <Spinner
                 android:id="@+id/spinner_viewatten_facsub"
                 android:background="@drawable/loginapagespinner"
-                android:textColor="#2B2727"
-                android:textColorHint="#857E7E"
+                android:textColor="#030303"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                tools:layout_editor_absoluteX="8dp"
-                android:layout_marginTop="20dp"/>
+                android:layout_height="45dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="3dp"/>
             <Spinner
                 android:spinnerMode="dialog"
                 android:scrollbars="vertical"
                 android:id="@+id/spinner_viewa_selectdate_facsub"
                 android:background="@drawable/loginapagespinner"
-                android:textColor="#2B2727"
-                android:textColorHint="#857E7E"
+                android:textColor="#090808"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                tools:layout_editor_absoluteX="8dp"
-                android:layout_marginTop="20dp"/>
+                android:layout_height="45dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"/>
 
             <Button
                 android:id="@+id/fac_viewatten_proceed_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="View Attendance Collectively->"
-                android:layout_margin="10dp"
+                android:text="View Attendance Collectively"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/loginapagespinner"
                 android:textColor="#070707"
                 />
@@ -68,8 +73,11 @@
                 android:id="@+id/fac_viewatten_bydate_proceed_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="view Attendance by date->"
-                android:layout_margin="10dp"
+                android:text="view Attendance by date"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp"
                 android:background="@drawable/loginapagespinner"
                 android:textColor="#070707"
                 />

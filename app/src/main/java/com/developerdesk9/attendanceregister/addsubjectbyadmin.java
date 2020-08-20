@@ -27,12 +27,14 @@ import java.util.List;
 
 public class addsubjectbyadmin extends AppCompatActivity  {
 
+    String item_batchname;
     Spinner spinnerfac,spinnerbatch;
-    String itembatch,itemfac;
+    String itemfac;
     EditText subcodee;
     String subcode;
     DatabaseReference databaseFaculty;
     DatabaseReference facsubjectdetails;
+    DatabaseReference dbbatchname;
     Button addsubbtnv;
     ProgressDialog mDialog;
 
@@ -50,25 +52,21 @@ public class addsubjectbyadmin extends AppCompatActivity  {
 
         databaseFaculty= FirebaseDatabase.getInstance().getReference("Faculty");
         facsubjectdetails =FirebaseDatabase.getInstance().getReference("FacultySubjectDetails");
+        dbbatchname=FirebaseDatabase.getInstance().getReference("BatchName");
 
 
-        List<String> lstbatch=new ArrayList<String>();
-        lstbatch.add("Select Batch");
-        for(int i=2016;i<=2030;i++)
-        {
-            String a=String.valueOf(i);
-            lstbatch.add("CSE"+a);
-            lstbatch.add("ECE"+a);
-        }
+        //Spinner for batchname
+        final List<String> lstbacthn=new ArrayList<String>();
+        lstbacthn.add("Select Batch");
 
-        ArrayAdapter<String> batcharrayadapter=new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,lstbatch);
-        batcharrayadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerbatch.setAdapter(batcharrayadapter);
+        ArrayAdapter<String> batchyarrayadapter=new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,lstbacthn);
+        batchyarrayadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerbatch.setAdapter(batchyarrayadapter);
 
         spinnerbatch.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                itembatch=parent.getItemAtPosition(position).toString();
+                item_batchname=parent.getItemAtPosition(position).toString();
             }
 
             @Override
@@ -76,6 +74,24 @@ public class addsubjectbyadmin extends AppCompatActivity  {
 
             }
         });
+
+        dbbatchname.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot dsp :dataSnapshot.getChildren()){
+                    String name;
+                    name=dsp.getKey();
+                    lstbacthn.add(name);
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
 
         //Spinner for faculty
         final List<String> lstfac=new ArrayList<String>();
@@ -139,7 +155,7 @@ public class addsubjectbyadmin extends AppCompatActivity  {
             Toast.makeText(getApplicationContext(),"Select Faculty",Toast.LENGTH_SHORT).show();
             return;
         }
-        else if (itembatch.equals("Select Batch")){
+        else if (item_batchname.equals("Select Batch")){
             Toast.makeText(getApplicationContext(),"Select Batch",Toast.LENGTH_SHORT).show();
             return;
         }
@@ -150,7 +166,7 @@ public class addsubjectbyadmin extends AppCompatActivity  {
         mDialog.show();
 
         String subcodebatch;
-        subcodebatch=(itembatch+"-"+subcode);
+        subcodebatch=(item_batchname+"-"+subcode);
 
 
         AddSubByAdmin addsub=new AddSubByAdmin(subcodebatch);

@@ -8,17 +8,21 @@
     tools:context=".addstudent">
 
     <LinearLayout
+        android:background="@drawable/backgroundcorners"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:orientation="vertical">
+
         <TextView
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Student Registration"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"/>
         <EditText
             android:id="@+id/stdname_et"
@@ -26,7 +30,7 @@
             android:background="@drawable/inputs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="3dp"
             android:layout_marginTop="8dp"
             android:ems="10"
             android:hint="Name"
@@ -39,7 +43,9 @@
             android:background="@drawable/inputs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="3dp"
             android:hint="Enrollment No"
             android:inputType="number" />
 
@@ -60,16 +66,22 @@
             android:id="@+id/spinner1"
             android:background="@drawable/loginapagespinner"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_margin="10dp"
+            android:layout_height="50dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="3dp"
             />
-           <!-- android:entries="@array/classes"-->
+
 
         <Button
             android:id="@+id/addstudentmainpage_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Add Student"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
             android:background="@drawable/loginapagespinner"
             android:textColor="#070707"
             />

@@ -14,20 +14,24 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class removestudent extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
+public class removestudent extends AppCompatActivity{
 
-    String item;
+    String item_batchname;
     EditText Sid;
     String sid;
     Button delstdbtn;
     DatabaseReference databaseStudent;
     DatabaseReference batchdetails;
+    DatabaseReference dbbatchname;
     ProgressDialog mDialog;
 
     @Override
@@ -42,23 +46,48 @@ public class removestudent extends AppCompatActivity implements AdapterView.OnIt
         mDialog=new ProgressDialog(this);
 
         databaseStudent = FirebaseDatabase.getInstance().getReference("Student");
+        dbbatchname=FirebaseDatabase.getInstance().getReference("BatchName");
         //will be used later while updating things currently unused
         batchdetails=FirebaseDatabase.getInstance().getReference("Batchdetails");
 
 
         Spinner spinner = (Spinner) findViewById(R.id.spinner2);
-        spinner.setOnItemSelectedListener((AdapterView.OnItemSelectedListener) this);
-        List<String> categories = new ArrayList<String>();
-        categories.add("Select Batch");
-        for(int i=2016;i<=2030;i++)
-        {
-            String a=String.valueOf(i);
-            categories.add("CSE"+a);
-            categories.add("ECE"+a);
-        }
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(dataAdapter);
+        //Spinner for batchname
+        final List<String> lstbacthn=new ArrayList<String>();
+        lstbacthn.add("Select Batch");
+
+        ArrayAdapter<String> facultyarrayadapter=new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,lstbacthn);
+        facultyarrayadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(facultyarrayadapter);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                item_batchname=parent.getItemAtPosition(position).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        dbbatchname.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot dsp :dataSnapshot.getChildren()){
+                    String name;
+                    name=dsp.getKey();
+                    lstbacthn.add(name);
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
 
         delstdbtn.setOnClickListener(new View.OnClickListener() {
@@ -70,16 +99,6 @@ public class removestudent extends AppCompatActivity implements AdapterView.OnIt
     }
 
 
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        item =parent.getItemAtPosition(position).toString().trim();
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
-    }
-
     public void removestd(){
 
         sid = Sid.getText().toString().trim();
@@ -88,7 +107,7 @@ public class removestudent extends AppCompatActivity implements AdapterView.OnIt
             Sid.setError("Enter Enrollment Number");
             return;
         }
-        else if(item=="Select Batch")
+        else if(item_batchname=="Select Batch")
         {
             Toast.makeText(getApplicationContext(),"Please Select Batch",Toast.LENGTH_SHORT).show();
             return;
@@ -104,7 +123,7 @@ public class removestudent extends AppCompatActivity implements AdapterView.OnIt
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful()){
 
-                    batchdetails.child(item).child(sid).setValue(null).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    batchdetails.child(item_batchname).child(sid).setValue(null).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()){

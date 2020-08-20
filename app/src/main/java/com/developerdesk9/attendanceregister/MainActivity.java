@@ -3,20 +3,17 @@ package com.developerdesk9.attendanceregister;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -27,20 +24,25 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
-import java.util.ArrayList;
-import java.util.List;
+public class MainActivity extends AppCompatActivity{
 
-public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-
-    EditText username,password;
+    EditText username;
+    TextInputLayout password;
     public Button loginbtn;
-    String item;
+    String item="admin";
     String userid,pass;
     DatabaseReference mreference;
     ProgressDialog mDialog;
-
-
+    private static final String FILE_NAME = "state.txt";
+    String state;
+    String falg=null,uuid=null;
     private static long back_pressed;
     private FirebaseAuth defaultAuth;
     private TextView forpass_btn;
@@ -49,13 +51,15 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         defaultAuth=FirebaseAuth.getInstance();
+        redirectstate();
+
+        mreference=FirebaseDatabase.getInstance().getReference("Faculty");
 
         mDialog=new ProgressDialog(this);
 
         username = findViewById(R.id.username_et);
-        password = findViewById(R.id.password_et);
+        password = (TextInputLayout)findViewById(R.id.password_et);
         loginbtn= findViewById(R.id.loginButton);
         forpass_btn=findViewById(R.id.forgetpass_tv);
 
@@ -67,23 +71,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             }
         });
 
-        Spinner spinner = (Spinner) findViewById(R.id.logi_spinner);
-        spinner.setOnItemSelectedListener((AdapterView.OnItemSelectedListener) this);
-        List<String> categories = new ArrayList<String>();
-        categories.add("Faculty");
-        categories.add("Admin");
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(dataAdapter);
-
-
         loginbtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
 
                 userid = username.getText().toString().trim();
-                pass = password.getText().toString().trim();
+                pass = password.getEditText().getText().toString().trim();
 
                 if(userid.isEmpty()){
                     username.setError("Please Enter Username");
@@ -94,33 +88,34 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     return;
                 }
 
-                mDialog.setTitle("Authenticating...");
-                mDialog.setMessage(userid);
-                mDialog.setCanceledOnTouchOutside(false);
-                mDialog.show();
+                else {
 
-                checklogin();
+                    mDialog.setTitle("Authenticating...");
+                    mDialog.setMessage(userid);
+                    mDialog.setCanceledOnTouchOutside(false);
+                    mDialog.show();
+
+                    checklogin();
+                }
+
+
 
             }
         });
 
     }
 
-
     @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        item =parent.getItemAtPosition(position).toString().trim();
+    protected void onStart() {
+        super.onStart();
+
     }
 
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
-    }
 
     public void checklogin(){
 
         String mEmail,mPassword;
-        mEmail=userid+"@iiitnr.edu.in";
+        mEmail=userid+"@gmail.com";
         mPassword=pass;
 
         defaultAuth.signInWithEmailAndPassword(mEmail, mPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -131,7 +126,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     verifyusercredential();
                 } else {
                     mDialog.dismiss();
-                    Toast.makeText(getApplicationContext(), "Login Failed!!..", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),"UserId/Password is Incorrect or you aren't registered", Toast.LENGTH_LONG).show();
                     defaultAuth.signOut();
 
                 }
@@ -139,41 +134,72 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         });
 
+    }
+
+    public void checkEmailVerification(){
+
+        FirebaseUser firebaseUser=FirebaseAuth.getInstance().getCurrentUser();
+        boolean emailflag=firebaseUser.isEmailVerified();
+
+        if(emailflag){
+
+            return;
+
+        }
+        else
+        {
+            sendEmailVerificaionLink();
+            defaultAuth.signOut();
+        }
+    }
 
 
+    private void sendEmailVerificaionLink(){
 
+        FirebaseUser firebaseUser=FirebaseAuth.getInstance().getCurrentUser();
+        if(firebaseUser!=null)
+        {
+            firebaseUser.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if(task.isSuccessful())
+                    {
+                        Toast.makeText(getApplicationContext(),"Verification link sent..!",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),"Please Verify your email before Login",Toast.LENGTH_SHORT).show();
+                        finish();
+                        defaultAuth.signOut();
+                    }
+                    else {
+                        Toast.makeText(getApplicationContext(),"Error...Verification link hasn't sent..!!",Toast.LENGTH_LONG).show();
+                        finish();
+                        defaultAuth.signOut();
 
+                    }
 
-
-
+                }
+            });
+        }
     }
 
 
     public void verifyusercredential(){
 
-        mreference = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference dbuser = mreference.child(item).child(userid);
 
-        dbuser.addListenerForSingleValueEvent(new ValueEventListener() {
+        mreference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 try {
-                    String  dbpassword;
-                    if (item == "Admin") {
-                        dbpassword = dataSnapshot.child("aid").getValue(String.class);
-                        verify(dbpassword);
+                    item=dataSnapshot.child(userid).child("type").getValue(String.class);
+                    verify(item);
 
-                    }
-
-                    else if (item == "Faculty") {
-                        dbpassword = dataSnapshot.child("tid").getValue(String.class);
-                        verify(dbpassword);
-                    }
                 }
                 catch (Exception e)
                 {
-                    Toast.makeText(getApplicationContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
+                    mDialog.dismiss();
+                    Toast.makeText(getApplicationContext(), "Account not found ..!", Toast.LENGTH_SHORT).show();
                     defaultAuth.signOut();
+                    startActivity(getIntent());
+                    finish();
                 }
 
             }
@@ -189,59 +215,39 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
 
-    public void verify(String dbpassword){
+    public void verify(String item){
 
-        if (item == "Faculty" && userid.equals(dbpassword)) {
-
+        if (item.equals("faculty")) {
             mDialog.dismiss();
-            //startActivity(new Intent(this,facultydashboard.class));
+            savests("2"+userid);
             Intent intent =new Intent(this,facultydashboard.class);
             intent.putExtra("tid",userid);
             startActivity(intent);
             finish();
 
         }
-        else if (item == "Admin" && userid.equals(dbpassword)) {
+        else if (item.equals("admin")) {
             mDialog.dismiss();
+            savests("1"+userid);
             Intent intent1 =new Intent(this,admin_mainpage.class);
             intent1.putExtra("tid",userid);
             startActivity(intent1);
             finish();
         }
-        else if(! userid.equals(dbpassword)){
+
+        else {
             defaultAuth.signOut();
-            Toast.makeText(getApplicationContext(),"UserId/Password is Incorrect or you aren't "+item, Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),"UserId/Password is Incorrect or you aren't registered", Toast.LENGTH_LONG).show();
             mDialog.dismiss();
 
         }
 
 
-        /*
-
-        private void checkEmailVerification(){
-
-            FirebaseUser firebaseUser=FirebaseAuth.getInstance().getCurrentUser();
-            boolean emailflag=firebaseUser.isEmailVerified();
-
-            if(emailflag){
-
-                startActivity(new Intent(getApplicationContext(),MainActivity.class));
-                Toast.makeText(getApplicationContext(), "Login Successful", Toast.LENGTH_SHORT).show();
-                finish();
-
-            }
-            else
-            {
-                Toast.makeText(getApplicationContext(), "Please verify your Email", Toast.LENGTH_LONG).show();
-                defaultAuth.signOut();
-            }
-        }
-
-        */
 
         //end of emailverification
 
     }
+
 
     private void forPassCustomDialog()
     {
@@ -290,5 +296,93 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         dialog.show();
     }
+
+
+    public void savests(String statevar ) {
+        FileOutputStream fos = null;
+
+        try {
+            fos = openFileOutput(FILE_NAME, MODE_PRIVATE);
+            fos.write(statevar.getBytes());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (fos != null) {
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+
+    public void redirectstate(){
+
+        FileInputStream fis = null;
+
+        try {
+            fis = openFileInput(FILE_NAME);
+            InputStreamReader isr = new InputStreamReader(fis);
+            BufferedReader br = new BufferedReader(isr);
+            StringBuilder sb = new StringBuilder();
+            String text;
+
+            while ((text = br.readLine()) != null) {
+                sb.append(text).append("\n");
+            }
+
+
+            state=sb.toString();
+
+            onstsbasicredirectfinalcheck(state);
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (fis != null) {
+                try {
+                    fis.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+    }
+
+    public void onstsbasicredirectfinalcheck(String st){
+
+
+        try {
+            falg=st.substring(0,1);
+            uuid=st.substring(1).trim().toLowerCase();
+        }
+        catch (Exception e){}
+
+        if (falg.equals("2")){
+            Intent intenttt=new Intent(MainActivity.this,facultydashboard.class);
+            intenttt.putExtra("tid",uuid);
+            startActivity(intenttt);
+            finish();
+        }
+        else if(falg.equals("1")){
+            Intent intentt=new Intent(MainActivity.this,admin_mainpage.class);
+            intentt.putExtra("tid",uuid);
+            startActivity(intentt);
+            finish();
+        }
+
+
+    }
+
+
+
+
 
 }

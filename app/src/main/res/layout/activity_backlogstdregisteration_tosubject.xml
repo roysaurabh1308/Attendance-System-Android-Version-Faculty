@@ -8,14 +8,20 @@
     tools:context=".backlogstdregisteration_tosubject">
 
     <LinearLayout
+        android:background="@drawable/backgroundcorners"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="120dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:orientation="vertical">
+
         <TextView
+            android:textColor="@android:color/white"
             android:gravity="center"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Backlog Student Subject Registration"
@@ -26,12 +32,12 @@
             android:background="@drawable/inputs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp"
-            android:ems="10"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
             android:hint="Name"
             android:inputType="textPersonName"
-            android:layout_margin="10dp" />
+            />
 
         <EditText
             android:id="@+id/back_enrollnemtno_et"
@@ -39,7 +45,9 @@
             android:background="@drawable/inputs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
             android:hint="Enrollment No"
             android:inputType="number" />
 
@@ -47,14 +55,20 @@
             android:id="@+id/back_spinner1"
             android:background="@drawable/loginapagespinner"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_margin="10dp"
+            android:layout_height="45dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
             />
 
         <Button
             android:id="@+id/backstd_mainpage_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:text="Add Student"
             android:background="@drawable/loginapagespinner"
             android:textColor="#070707"

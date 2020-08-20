@@ -1,9 +1,14 @@
 package com.developerdesk9.attendanceregister;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
@@ -25,6 +30,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -32,6 +38,15 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
+
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class admin_mainpage extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -41,6 +56,8 @@ public class admin_mainpage extends AppCompatActivity
     Button addstubtn;
     Button remstubtn;
     Button addsubbtn;
+    Button baclogreg;
+    CircleImageView admin_nav_image;
 
     private TextView nav_name;
     private TextView nav_username;
@@ -48,15 +65,21 @@ public class admin_mainpage extends AppCompatActivity
     DatabaseReference facultyrec;
     FirebaseAuth mAuth;
     View headerViw1;
-
-    private static long back_pressed;
-
     ProgressDialog mDialog;
+    private static final String FILE_NAME = "state.txt";
+
+    FirebaseStorage firebaseStorage;
+    private static int PICK_IMAGE=123;
+    Uri imagepath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_mainpage);
+        Intent intent=getIntent();
+        tid=intent.getStringExtra("tid");
+
+        firebaseStorage=FirebaseStorage.getInstance();
 
         mDialog=new ProgressDialog(this);
 
@@ -67,10 +90,13 @@ public class admin_mainpage extends AppCompatActivity
         addstubtn=findViewById(R.id.addstudent_btn);
         remstubtn=findViewById(R.id.removestudent_btn);
         addsubbtn=findViewById(R.id.addsbject_btn);
+        baclogreg=findViewById(R.id.baclog_regby_admin_btn);
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+
 
        /* FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -82,10 +108,10 @@ public class admin_mainpage extends AppCompatActivity
         });
 
         */
-        facultyrec= FirebaseDatabase.getInstance().getReference("Admin");
+        facultyrec= FirebaseDatabase.getInstance().getReference("Faculty");
+        facultyrec.keepSynced(true);
 
-        Intent intent=getIntent();
-        tid=intent.getStringExtra("tid");
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -97,7 +123,10 @@ public class admin_mainpage extends AppCompatActivity
         headerViw1=navigationView.getHeaderView(0);
         nav_name=(TextView)headerViw1.findViewById(R.id.nav_name_tv);
         nav_username=(TextView)headerViw1.findViewById(R.id.nav_username_tv);
+        admin_nav_image=(CircleImageView)headerViw1.findViewById(R.id.nav_admin_imageView);
         navigationView.setNavigationItemSelectedListener(this);
+
+
 
 
 
@@ -105,13 +134,12 @@ public class admin_mainpage extends AppCompatActivity
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String musernam,mname;
-                mname=dataSnapshot.child(tid).child("aname").getValue(String.class);
+                mname=dataSnapshot.child(tid).child("tname").getValue(String.class);
                 nav_name.setText(mname);
 
                 musernam=tid;
 
-                //Toast.makeText(getApplicationContext(),musernam+","+mname,Toast.LENGTH_SHORT).show();
-                musernam=musernam+"@iiitnr.edu.in";
+                musernam=musernam+"@gmail.com";
                  nav_username.setText(musernam);
             }
 
@@ -158,6 +186,40 @@ public class admin_mainpage extends AppCompatActivity
             }
         });
 
+        baclogreg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),baclog_reg_by_admin.class));
+            }
+        });
+
+        admin_nav_image.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Intent intent=new Intent(getApplicationContext(),facultyprofile.class);
+                intent.putExtra("tid",tid);
+                startActivity(intent);
+                return false;
+            }
+        });
+
+
+        //naviagtion bar image
+
+        StorageReference storageReference1=firebaseStorage.getReference("Faculty");
+        storageReference1.child(tid).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                try {
+                    Picasso.get().load(uri).fit().centerCrop().into(admin_nav_image);
+                }catch (Exception e){}
+            }
+        });
+
+
+        //end nav_bar Image
+
+
 
     }
 
@@ -167,15 +229,34 @@ public class admin_mainpage extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         }
-        else if (back_pressed+2000 >System.currentTimeMillis()){
-            super.onBackPressed();
-            finish();
-            ActivityCompat.finishAffinity(this);
-            System.exit(0);
-        }
+
         else {
-            Toast.makeText(getBaseContext(), "Press once again to exit", Toast.LENGTH_SHORT).show();
-            back_pressed = System.currentTimeMillis();
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Alert!");
+            builder.setMessage("Do you want to Exit?");
+            builder.setCancelable(false);
+            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which)
+                {
+
+                    finish();
+                    ActivityCompat.finishAffinity(admin_mainpage.this);
+                    System.exit(0);
+                }
+            });
+
+            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which)
+                {
+
+                    dialog.cancel();
+                }
+            });
+
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();  // Show the Alert Dialog box
         }
     }
 
@@ -195,6 +276,14 @@ public class admin_mainpage extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            startActivity(new Intent(getApplicationContext(),about_app.class));
+            return true;
+        }
+        else if(id == R.id.logout_title_btn) {
+            signout("599");
+            Intent logout=new Intent(admin_mainpage.this,MainActivity.class);
+            logout.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(logout);
             return true;
         }
 
@@ -208,15 +297,27 @@ public class admin_mainpage extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_pass_reset) {
+            forPassCustomDialog();
 
-        } else if (id == R.id.nav_logout_btn) {
-
+        }
+        else if (id == R.id.nav_admin_profile) {
+            Intent intent=new Intent(this,facultyprofile.class);
+            intent.putExtra("tid",tid);
+            startActivity(intent);
+        }
+        else if (id == R.id.nav_logout_btn) {
+            signout("599");
             Intent logout=new Intent(admin_mainpage.this,MainActivity.class);
             logout.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(logout);
-
         } else if (id == R.id.nav_aboutapp) {
-
+            startActivity(new Intent(getApplicationContext(),about_app.class));
+        }
+        else if (id == R.id.nav_coollective_batch_create) {
+            startActivity(new Intent(getApplicationContext(),collective_batch_creation_mid1.class));
+        }
+        else if (id == R.id.nav_batch_name_cr_btn) {
+            startActivity(new Intent(getApplicationContext(),batchnamecreate.class));
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -270,6 +371,30 @@ public class admin_mainpage extends AppCompatActivity
         });
 
         dialog.show();
+    }
+
+
+    public void signout(String statevar){
+
+        FileOutputStream fos = null;
+
+        try {
+            fos = openFileOutput(FILE_NAME, MODE_PRIVATE);
+            fos.write(statevar.getBytes());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (fos != null) {
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
     }
 
 

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#055CDF"
+    android:id="@+id/splash"
+    tools:context=".splashscreen">
+
+
+    <LinearLayout
+        android:id="@+id/logo_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+
+
+
+    <ImageView
+            android:id="@+id/logo"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/splashlogo"
+            />
+        <TextView
+            android:id="@+id/splashtext"
+            android:layout_below="@+id/logo"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textSize="25dp"
+            android:textColor="#fff"
+            android:textStyle="bold"
+            android:text="Attendance Register"/>
+        <TextView
+            android:textAlignment="textEnd"
+            android:id="@+id/bel_tv"
+            android:layout_below="@id/splashtext"
+            android:layout_width="wrap_content"
+            android:fontFamily="serif-monospace"
+            android:layout_height="wrap_content"
+            android:textColor="#fff"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+            android:text="Unique Hassle free experience..."/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+
+        android:gravity="bottom"
+        android:layout_below="@id/logo_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
+        <TextView
+            android:layout_margin="5dp"
+            android:includeFontPadding="false"
+            android:layout_width="wrap_content"
+            android:fontFamily="serif-monospace"
+            android:layout_height="wrap_content"
+            android:textColor="#fff"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+            android:text="Copyright&#169;2020"/>
+
+        <TextView
+            android:layout_centerInParent="true"
+            android:includeFontPadding="false"
+            android:layout_width="wrap_content"
+            android:fontFamily="serif-monospace"
+            android:layout_height="wrap_content"
+            android:textColor="#fff"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+            android:text="developrdesk9.Inc"/>
+
+    </LinearLayout>
+
+
+
+
+    <com.wang.avi.AVLoadingIndicatorView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/dimen_30"
+        app:indicatorColor="@android:color/white"
+        app:indicatorName="BallPulseIndicator" />
+
+
+
+
+</RelativeLayout>

@@ -8,18 +8,23 @@
     tools:context=".removestudent">
 
     <LinearLayout
+        android:background="@drawable/backgroundcorners"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="10dp"
         android:layout_marginTop="50dp"
         android:layout_marginRight="10dp"
-        android:layout_marginLeft="10dp"
-        >
+        android:layout_marginLeft="10dp">
         <TextView
-            android:layout_width="match_parent"
+            android:textColor="@android:color/white"
             android:gravity="center"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textStyle="bold"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
             android:text="Delete Student Account"/>
 
@@ -30,8 +35,9 @@
             android:background="@drawable/inputs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
             android:hint="Enrollment No"
             android:inputType="number"
             />
@@ -40,8 +46,10 @@
             android:id="@+id/spinner2"
             android:background="@drawable/loginapagespinner"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_margin="10dp"
+            android:layout_height="45dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
             />
 
         <Button
@@ -49,12 +57,10 @@
             android:textColor="#0F0F0F"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
             android:text="Delete"
             android:background="@drawable/loginapagespinner"
             />

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bgcolor"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".facultydashboard"
     tools:showIn="@layout/app_bar_facultydashboard">
@@ -38,6 +39,7 @@
 
 
     <LinearLayout
+        android:background="@drawable/bgcolor"
         android:id="@+id/buttons"
         android:layout_below="@+id/notify"
         android:layout_width="match_parent"
@@ -45,7 +47,6 @@
         android:orientation="vertical">
 
         <LinearLayout
-
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 

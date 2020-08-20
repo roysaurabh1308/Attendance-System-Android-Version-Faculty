@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bgcolor"
+    tools:context=".backlogstdregisteration_tosubject">
+
+    <LinearLayout
+        android:background="@drawable/backgroundcorners"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="120dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:textColor="@android:color/white"
+            android:gravity="center"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Backlog Subject Registration"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"/>
+        <EditText
+            android:id="@+id/back_adminreg_stdname_et"
+            android:textColor="#050505"
+            android:background="@drawable/inputs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:hint="Name"
+            android:inputType="textPersonName"
+            />
+
+        <EditText
+            android:id="@+id/back_adminreg_enrollnemtno_et"
+            android:textColor="#2B2727"
+            android:background="@drawable/inputs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:hint="Enrollment No"
+            android:inputType="number" />
+
+        <Spinner
+            android:id="@+id/back_fac_username_admin_spinner11"
+            android:background="@drawable/loginapagespinner"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            />
+        <Spinner
+            android:id="@+id/back_fac_sub_admin_spinner1"
+            android:background="@drawable/loginapagespinner"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            />
+
+        <Button
+            android:id="@+id/backstd_mainpage_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Add Student"
+            android:background="@drawable/loginapagespinner"
+            android:textColor="#070707"
+            />
+    </LinearLayout>
+
+
+</LinearLayout>
